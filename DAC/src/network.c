@@ -10,7 +10,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
-#include "network.h"
+#include "include/network.h"
 
 
 #define INT_TO_ADDR(_addr) \

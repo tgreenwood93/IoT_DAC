@@ -1,0 +1,6 @@
+[submodule "DAC/thirdparty/json"]
+	path = DAC/thirdparty/json
+	url = https://github.com/nlohmann/json.git
+[submodule "DAC/thirdparty/filesystem"]
+	path = DAC/thirdparty/filesystem
+	url = https://github.com/gulrak/filesystem.git

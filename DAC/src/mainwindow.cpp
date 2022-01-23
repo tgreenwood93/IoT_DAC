@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "include/mainwindow.h"
 #include "ui_mainwindow.h"
 
 #include <QDebug>
@@ -10,7 +10,7 @@
 
 
 extern "C" {
-#include "network.h"
+#include "include/network.h"
 }
 
 
@@ -67,6 +67,9 @@ MainWindow::MainWindow(QWidget *parent)
     //httpClient = new lib::qt::http_client(this);
     //spotify = new spt::Spotify(settings, *httpClient, this);
     //network = new QNetworkAccessManager(this);
+
+    // REVIEW might need to move this
+    stateValid = true;
 
 }
 
@@ -207,3 +210,11 @@ void MainWindow::update_picture()
     //ui->AlbumArt->show();
 
 }
+
+
+auto MainWindow::isValid() const -> bool
+{
+    return stateValid;
+}
+
+

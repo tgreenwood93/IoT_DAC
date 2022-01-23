@@ -4,6 +4,8 @@
 #include <QLocale>
 #include <string>
 #include <QCommandLineParser>
+#include "include/lib/developermode.h"
+#include "include/lib/log.h"
 
 int main(int argc, char *argv[])
 {
@@ -27,28 +29,24 @@ int main(int argc, char *argv[])
         {"paths", "Print paths for config file and cache."},
     });
 
-    // TODO look at QCommandLineProcessor integration
     parser.process(app);
 
-    if (parser.isSet("dev"))
-    {
-        qDebug() << "Dev Mode";
-        //lib::developer_mode::enabled = true;
+    if (parser.isSet("dev")) {
+        lib::log::info("Developer Mode Enabled");
+        lib::developer_mode::enabled = true;
     }
 
-    if (parser.isSet("paths"))
-    {
-        qDebug() << "Paths";
-        //lib::developer_mode::enabled = true;
+    if (parser.isSet("paths")) {
+        lib::log::info("Config: This");
+        lib::log::info("Cache:  That");
+        return 0;
     }
 
     MainWindow w;
 
     // Show window and run application
-    //if (!w.isValid())
-    //{
-    //    return 1;
-    //}
+    if (!w.isValid())
+        return 1;
 
     w.show();
 
