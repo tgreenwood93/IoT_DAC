@@ -5,8 +5,12 @@
 #include <QElapsedTimer>
 #include <QGraphicsScene>
 //#include <QNetworkAccessManager>
-#include "imagewidget.h"
-#include "http_client.h"
+#include "include/imagewidget.h"
+#include "include/http_client.h"
+#include "include/lib/crash/crashhandler.h"
+#include "include/qt/httpclient.h"
+//#include "include/httpclient.h"
+#include "spotify/spotify.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,7 +24,8 @@ public:
 
     void AlbumArt1_MenuButton_Clicked();
 
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget *parent, lib::settings &settings, lib::paths &paths);
+    //MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
     void Home1_MenuButton_Clicked();
@@ -51,11 +56,14 @@ private:
     bool stateValid = true;
 
     // lib
-    //lib::http_client *httpClient = nullptr;
-    //spt::Spotify *spotify = nullptr;
+    lib::settings &settings;
+    lib::paths &paths;
+    lib::http_client *httpClient = nullptr;
+    lib::json_cache cache;
+    spt::Spotify *spotify = nullptr;
 
     // Non-Widget Qt
-    //QNetworkAccessManager *network = nullptr;
+    QNetworkAccessManager *network = nullptr;
 
 };
 #endif // MAINWINDOW_H

@@ -8,7 +8,6 @@
 #include <QGraphicsDropShadowEffect>
 #include <QString>
 
-
 extern "C" {
 #include "include/network.h"
 }
@@ -22,12 +21,22 @@ enum {
 
 int main_display = e_MAIN_DISPLAY_1;
 
-
-
-MainWindow::MainWindow(QWidget *parent)
+/*
+(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+
+    */
+MainWindow::MainWindow(QWidget *parent, lib::settings &settings, lib::paths &paths)
+    : QMainWindow(parent),
+      ui(new Ui::MainWindow),
+      settings(settings),
+      paths(paths),
+      cache(paths)
 {
+
+    lib::crash_handler::set_cache(cache);
+
     ui->setupUi(this);
 
     timer.start();
@@ -69,6 +78,19 @@ MainWindow::MainWindow(QWidget *parent)
     //network = new QNetworkAccessManager(this);
 
     // REVIEW might need to move this
+
+    httpClient = new lib::qt::http_client(this);
+    spotify = new spt::Spotify(settings, *httpClient, this);
+    network = new QNetworkAccessManager(this);
+
+    // Check connection
+    //stateValid = spotify->tryRefresh();
+    //if (!stateValid)
+    //{
+    //    splash.finish(this);
+    //    return;
+    //}
+
     stateValid = true;
 
 }

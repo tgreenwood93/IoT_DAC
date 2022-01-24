@@ -45,7 +45,7 @@ namespace lib
         auto get_all_crashes() const -> std::vector<lib::crash_info> override;
 
     private:
-        //const lib::paths &paths;
+        const lib::paths &paths;
 
         /**
          * Get parent directory for cache type
@@ -60,12 +60,12 @@ namespace lib
         /**
          * Get full file path for cache type and id
          */
-        //auto path(const std::string &type, const std::string &id,
-        //	const std::string &extension) const -> ghc::filesystem::path;
+        auto path(const std::string &type, const std::string &id,
+            const std::string &extension) const -> ghc::filesystem::path;
 
         /**
          * Get basename of path
          */
-        //static auto get_url_id(const ghc::filesystem::path &path) -> std::string;
+        static auto get_url_id(const ghc::filesystem::path &path) -> std::string;
     };
 }

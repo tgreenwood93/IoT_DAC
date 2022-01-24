@@ -1,11 +1,15 @@
-#include "include/mainwindow.h"
-
 #include <QApplication>
 #include <QLocale>
 #include <string>
 #include <QCommandLineParser>
+
+#include "include/lib/crash/crashhandler.h"
 #include "include/lib/developermode.h"
 #include "include/lib/log.h"
+#include "include/mainwindow.h"
+
+#include "include/qt/qtpaths.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -14,8 +18,14 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("QT DAC");
     QCoreApplication::setApplicationVersion(APP_VERSION);
 
+    // set paths for storing settings and crash files
+    QtPaths paths(nullptr);
+    lib::settings settings(paths);
+
     // Show version if requested
     QCommandLineParser parser;
+
+    lib::crash_handler::init();
 
     // Create Qt application
     QApplication app(argc, argv);
@@ -37,12 +47,12 @@ int main(int argc, char *argv[])
     }
 
     if (parser.isSet("paths")) {
-        lib::log::info("Config: This");
-        lib::log::info("Cache:  That");
+        lib::log::info("Config: {}", paths.config_file());
+        lib::log::info("Cache:  {}", paths.cache());
         return 0;
     }
 
-    MainWindow w;
+    MainWindow w(nullptr, settings, paths);
 
     // Show window and run application
     if (!w.isValid())
